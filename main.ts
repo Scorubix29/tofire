@@ -9,7 +9,7 @@ namespace wifi {
     //% weight=90
     //% ssid.shadow="text" password.shadow="text"
     export function connectWiFi(ssid: string, password: string) {
-        serial.redirect(SerialPin.P13, SerialPin.P1, BaudRate.BaudRate115200)
+        serial.redirect(SerialPin.P2, SerialPin.P1, BaudRate.BaudRate115200)
         serial.writeLine("AT+RST")
         basic.pause(2000)
         serial.writeLine("AT+CWMODE=1")
