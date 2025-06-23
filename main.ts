@@ -1,5 +1,23 @@
 namespace wifi {
 
+    /**
+     * Connect to WiFi using SSID and password
+     * @param ssid WiFi SSID
+     * @param password WiFi password
+     */
+    //% block="connect WiFi SSID %ssid|password %password"
+    //% weight=90
+    //% ssid.shadow="text" password.shadow="text"
+    export function connectWiFi(ssid: string, password: string) {
+        serial.redirect(SerialPin.P0, SerialPin.P1, BaudRate.BaudRate115200)
+        serial.writeLine("AT+RST")
+        basic.pause(2000)
+        serial.writeLine("AT+CWMODE=1")
+        basic.pause(1000)
+        serial.writeLine(`AT+CWJAP="${ssid}","${password}"`)
+        basic.pause(5000)
+    }
+
     function sendToFirebase(sensor: string, value: number) {
         let data = `{"value": ${value}}`
         let length = data.length
@@ -24,16 +42,14 @@ namespace wifi {
         serial.writeLine("AT+CIPCLOSE")
     }
 
-    export function connectWiFi(ssid: string, password: string) {
-        serial.redirect(SerialPin.P0, SerialPin.P1, BaudRate.BaudRate115200)
-        serial.writeLine("AT+RST")
-        basic.pause(2000)
-        serial.writeLine("AT+CWMODE=1")
-        basic.pause(1000)
-        serial.writeLine(`AT+CWJAP="${ssid}","${password}"`)
-        basic.pause(5000)
-    }
-
+    /**
+     * Send data to Firebase through local proxy
+     * @param sensor Sensor name/path
+     * @param value Numeric value to send
+     */
+    //% block="send data sensor %sensor|value %value"
+    //% weight=80
+    //% sensor.shadow="text"
     export function sendData(sensor: string, value: number) {
         sendToFirebase(sensor, value)
     }
