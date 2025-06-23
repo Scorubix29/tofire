@@ -3,7 +3,7 @@ namespace wifi {
     function sendToFirebase(sensor: string, value: number) {
         let data = `{"value": ${value}}`
         let length = data.length
-        let host = "192.168.1.88"  // Replace with your PC IP
+        let host = "192.168.248.29"  // Replace with your PC IP
         let port = "8080"
         let path = `/update/${sensor}`
 
